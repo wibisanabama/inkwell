@@ -15,6 +15,8 @@ import Register from './pages/public/Register';
 import Dashboard from './pages/admin/Dashboard';
 import Categories from './pages/admin/Categories';
 import Tags from './pages/admin/Tags';
+import Posts from './pages/admin/Posts';
+import PostEditor from './pages/admin/PostEditor';
 
 function App() {
   return (
@@ -37,8 +39,13 @@ function App() {
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/categories" element={<Categories />} />
                 <Route path="/admin/tags" element={<Tags />} />
+                
+                {/* Posts */}
+                <Route path="/admin/posts" element={<Posts />} />
+                <Route path="/admin/posts/create" element={<PostEditor />} />
+                <Route path="/admin/posts/:id/edit" element={<PostEditor />} />
+
                 {/* Future Admin Routes will go here */}
-                <Route path="/admin/posts" element={<div>Posts (Placeholder)</div>} />
                 <Route path="/admin/comments" element={<div>Comments (Placeholder)</div>} />
                 <Route path="/admin/settings" element={<div>Settings (Placeholder)</div>} />
               </Route>
