@@ -14,6 +14,7 @@ import Login from './pages/public/Login';
 import Register from './pages/public/Register';
 import Dashboard from './pages/admin/Dashboard';
 import Categories from './pages/admin/Categories';
+import Tags from './pages/admin/Tags';
 
 function App() {
   return (
@@ -35,9 +36,9 @@ function App() {
               <Route element={<AdminLayout />}>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/categories" element={<Categories />} />
+                <Route path="/admin/tags" element={<Tags />} />
                 {/* Future Admin Routes will go here */}
                 <Route path="/admin/posts" element={<div>Posts (Placeholder)</div>} />
-                <Route path="/admin/tags" element={<div>Tags (Placeholder)</div>} />
                 <Route path="/admin/comments" element={<div>Comments (Placeholder)</div>} />
                 <Route path="/admin/settings" element={<div>Settings (Placeholder)</div>} />
               </Route>
