@@ -1,10 +1,13 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { FiUploadCloud, FiX } from 'react-icons/fi';
+import { FiUploadCloud, FiX, FiCheckCircle } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import api from '../../api/axios';
 
 const ImageUpload = ({ value, onChange }) => {
   const [preview, setPreview] = useState(value || null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     setPreview(value);
@@ -26,18 +29,18 @@ const ImageUpload = ({ value, onChange }) => {
     setIsDragging(false);
     
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFile(e.dataTransfer.files[0]);
+      uploadFile(e.dataTransfer.files[0]);
     }
   }, []);
 
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      handleFile(e.target.files[0]);
+      uploadFile(e.target.files[0]);
     }
   };
 
-  const handleFile = (file) => {
+  const uploadFile = async (file) => {
     if (!file.type.match('image.*')) {
       toast.error('Please upload an image file');
       return;
@@ -48,15 +51,34 @@ const ImageUpload = ({ value, onChange }) => {
       return;
     }
 
-    // Pass the file to the parent
-    onChange(file);
+    const formData = new FormData();
+    formData.append('image', file);
 
-    // Create a preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setPreview(e.target.result);
-    };
-    reader.readAsDataURL(file);
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    try {
+      const response = await api.post('/admin/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        },
+      });
+
+      const imageUrl = response.data.url;
+      setPreview(imageUrl);
+      onChange(imageUrl);
+      toast.success('Image uploaded successfully');
+    } catch (error) {
+      console.error('Upload error', error);
+      toast.error(error.response?.data?.message || 'Failed to upload image');
+    } finally {
+      setIsUploading(false);
+      setUploadProgress(0);
+    }
   };
 
   const handleRemove = (e) => {
@@ -75,6 +97,21 @@ const ImageUpload = ({ value, onChange }) => {
               <FiX /> Remove Image
             </button>
           </div>
+        </div>
+      ) : isUploading ? (
+        <div className="image-upload-zone" style={{ cursor: 'default' }}>
+          <div style={{ marginBottom: '1rem', color: 'var(--color-primary)' }}>Uploading...</div>
+          <div style={{ width: '100%', backgroundColor: 'var(--color-border)', borderRadius: 'var(--radius-full)', height: '8px', overflow: 'hidden' }}>
+            <div 
+              style={{ 
+                height: '100%', 
+                backgroundColor: 'var(--color-primary)', 
+                width: `${uploadProgress}%`,
+                transition: 'width 0.2s ease'
+              }} 
+            />
+          </div>
+          <div style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>{uploadProgress}%</div>
         </div>
       ) : (
         <div 

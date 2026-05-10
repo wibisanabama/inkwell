@@ -123,7 +123,8 @@ const PostEditor = () => {
       // For now, we are simulating it or relying on backend base64 processing if supported
       // Let's use a standard JSON payload as defined by the backend instructions
       const payload = {
-        ...formData
+        ...formData,
+        featured_image: featuredImage // which is now a URL string returned from ImageUpload
       };
 
       // Note: If Feature 6 (Media Upload) implements multipart/form-data, 

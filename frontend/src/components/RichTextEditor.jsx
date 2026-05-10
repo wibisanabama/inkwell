@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -7,16 +7,59 @@ import {
   FiBold, FiItalic, FiStrikethrough, FiList, 
   FiHash, FiImage, FiLink, FiCode, FiQuote 
 } from 'react-icons/fi';
+import toast from 'react-hot-toast';
+import api from '../../api/axios';
 
 const MenuBar = ({ editor }) => {
+  const fileInputRef = useRef(null);
+  const [isUploading, setIsUploading] = useState(false);
+
   if (!editor) return null;
 
   const addImage = useCallback(() => {
-    const url = window.prompt('URL');
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+    // Trigger hidden file input
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.match('image.*')) {
+      toast.error('Please upload an image file');
+      return;
     }
-  }, [editor]);
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error('Image size should be less than 2MB');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    setIsUploading(true);
+    const loadingToast = toast.loading('Uploading image...');
+
+    try {
+      const response = await api.post('/admin/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      const url = response.data.url;
+      if (url) {
+        editor.chain().focus().setImage({ src: url }).run();
+      }
+      toast.success('Image uploaded', { id: loadingToast });
+    } catch (error) {
+      console.error('Upload error', error);
+      toast.error(error.response?.data?.message || 'Failed to upload image', { id: loadingToast });
+    } finally {
+      setIsUploading(false);
+      // Reset input
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
 
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes('link').href;
@@ -39,6 +82,13 @@ const MenuBar = ({ editor }) => {
 
   return (
     <div className="tiptap-toolbar">
+      <input 
+        type="file" 
+        ref={fileInputRef} 
+        onChange={handleImageUpload} 
+        accept="image/*" 
+        style={{ display: 'none' }} 
+      />
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
