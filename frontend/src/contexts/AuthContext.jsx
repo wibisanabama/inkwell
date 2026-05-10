@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       // First ensure we have CSRF cookie (Sanctum)
-      await api.get('/sanctum/csrf-cookie', { baseURL: 'http://localhost:8000' });
+      await api.get('/sanctum/csrf-cookie');
       
       const response = await api.get('/user');
       setUser(response.data);
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     // Ensure CSRF cookie
-    await api.get('/sanctum/csrf-cookie', { baseURL: 'http://localhost:8000' });
+    await api.get('/sanctum/csrf-cookie');
     
     const response = await api.post('/login', { email, password });
     
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password, password_confirmation) => {
     // Ensure CSRF cookie
-    await api.get('/sanctum/csrf-cookie', { baseURL: 'http://localhost:8000' });
+    await api.get('/sanctum/csrf-cookie');
     
     const response = await api.post('/register', { 
       name, 
