@@ -7,10 +7,17 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/categories', [\App\Http\Controllers\CategoryController::class, 'index']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
     
     // Admin Dashboard
     Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
+
+    // Admin Categories
+    Route::post('/admin/categories', [\App\Http\Controllers\CategoryController::class, 'store']);
+    Route::put('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'update']);
+    Route::delete('/admin/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy']);
 });
