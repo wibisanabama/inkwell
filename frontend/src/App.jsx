@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './contexts/AuthContext';
 
-// Components
+// Components & Layouts
 import ProtectedRoute from './components/ProtectedRoute';
 import GuestRoute from './components/GuestRoute';
+import AdminLayout from './layouts/AdminLayout';
 
 // Pages
 import Home from './pages/public/Home';
@@ -30,7 +31,15 @@ function App() {
             
             {/* Admin Routes (Only accessible if logged in) */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route element={<AdminLayout />}>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                {/* Future Admin Routes will go here */}
+                <Route path="/admin/posts" element={<div>Posts (Placeholder)</div>} />
+                <Route path="/admin/categories" element={<div>Categories (Placeholder)</div>} />
+                <Route path="/admin/tags" element={<div>Tags (Placeholder)</div>} />
+                <Route path="/admin/comments" element={<div>Comments (Placeholder)</div>} />
+                <Route path="/admin/settings" element={<div>Settings (Placeholder)</div>} />
+              </Route>
             </Route>
             
             {/* Fallback */}
