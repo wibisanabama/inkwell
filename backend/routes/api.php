@@ -10,6 +10,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/categories', [\App\Http\Controllers\CategoryController::class, 'index']);
 Route::get('/tags', [\App\Http\Controllers\TagController::class, 'index']);
 
+Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
+Route::get('/posts/{slug}', [\App\Http\Controllers\PostController::class, 'show']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
@@ -25,4 +28,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Admin Tags
     Route::post('/admin/tags', [\App\Http\Controllers\TagController::class, 'store']);
     Route::delete('/admin/tags/{tag}', [\App\Http\Controllers\TagController::class, 'destroy']);
+
+    // Admin Posts
+    Route::get('/admin/posts', [\App\Http\Controllers\PostController::class, 'adminIndex']);
+    Route::post('/admin/posts', [\App\Http\Controllers\PostController::class, 'store']);
+    Route::put('/admin/posts/{post}', [\App\Http\Controllers\PostController::class, 'update']);
+    Route::delete('/admin/posts/{post}', [\App\Http\Controllers\PostController::class, 'destroy']);
 });
