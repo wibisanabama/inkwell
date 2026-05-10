@@ -4,11 +4,11 @@ import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import { 
-  FiBold, FiItalic, FiStrikethrough, FiList, 
-  FiHash, FiImage, FiLink, FiCode, FiQuote 
+  FiBold, FiItalic, FiMinus, FiList, 
+  FiHash, FiImage, FiLink, FiCode, FiMessageSquare 
 } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-import api from '../../api/axios';
+import api from '../api/axios';
 
 const MenuBar = ({ editor }) => {
   const fileInputRef = useRef(null);
@@ -111,7 +111,7 @@ const MenuBar = ({ editor }) => {
         className={`toolbar-btn ${editor.isActive('strike') ? 'is-active' : ''}`}
         title="Strikethrough"
       >
-        <FiStrikethrough />
+        <FiMinus />
       </button>
 
       <div className="toolbar-divider" />
@@ -157,7 +157,7 @@ const MenuBar = ({ editor }) => {
         className={`toolbar-btn ${editor.isActive('blockquote') ? 'is-active' : ''}`}
         title="Quote"
       >
-        <FiQuote />
+        <FiMessageSquare />
       </button>
 
       <div className="toolbar-divider" />
