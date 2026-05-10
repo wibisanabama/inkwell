@@ -83,11 +83,11 @@ const Categories = () => {
     try {
       if (currentCategory) {
         // Update
-        await api.put(`/categories/${currentCategory.id}`, formData);
+        await api.put(`/admin/categories/${currentCategory.id}`, formData);
         toast.success('Category updated successfully');
       } else {
         // Create
-        await api.post('/categories', formData);
+        await api.post('/admin/categories', formData);
         toast.success('Category created successfully');
       }
       setIsModalOpen(false);
@@ -107,7 +107,7 @@ const Categories = () => {
     if (!currentCategory) return;
     
     try {
-      await api.delete(`/categories/${currentCategory.id}`);
+      await api.delete(`/admin/categories/${currentCategory.id}`);
       toast.success('Category deleted successfully');
       fetchCategories();
     } catch (error) {
