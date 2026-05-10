@@ -12,6 +12,8 @@ Route::get('/tags', [\App\Http\Controllers\TagController::class, 'index']);
 
 Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
 Route::get('/posts/{slug}', [\App\Http\Controllers\PostController::class, 'show']);
+Route::get('/posts/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'index']);
+Route::post('/posts/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -37,4 +39,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Admin Upload
     Route::post('/admin/upload', [\App\Http\Controllers\MediaController::class, 'upload']);
+
+    // Admin Comments
+    Route::get('/admin/comments', [\App\Http\Controllers\CommentController::class, 'adminIndex']);
+    Route::put('/admin/comments/{id}', [\App\Http\Controllers\CommentController::class, 'update']);
+    Route::delete('/admin/comments/{id}', [\App\Http\Controllers\CommentController::class, 'destroy']);
 });
