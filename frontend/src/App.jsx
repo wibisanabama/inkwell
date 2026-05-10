@@ -7,9 +7,14 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import GuestRoute from './components/GuestRoute';
 import AdminLayout from './layouts/AdminLayout';
+import PublicLayout from './layouts/PublicLayout';
 
 // Pages
 import Home from './pages/public/Home';
+import Blog from './pages/public/Blog';
+import PostDetail from './pages/public/PostDetail';
+import CategoryPosts from './pages/public/CategoryPosts';
+
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
 import Dashboard from './pages/admin/Dashboard';
@@ -26,7 +31,12 @@ function App() {
         <div className="app-container">
           <Routes>
             {/* Public Routes (Accessible by anyone) */}
-            <Route path="/" element={<Home />} />
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/post/:slug" element={<PostDetail />} />
+              <Route path="/category/:slug" element={<CategoryPosts />} />
+            </Route>
             
             {/* Guest Routes (Only accessible if NOT logged in) */}
             <Route element={<GuestRoute />}>
