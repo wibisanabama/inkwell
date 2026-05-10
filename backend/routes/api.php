@@ -12,6 +12,7 @@ Route::get('/tags', [\App\Http\Controllers\TagController::class, 'index']);
 
 Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
 Route::get('/posts/{slug}', [\App\Http\Controllers\PostController::class, 'show']);
+Route::get('/posts/{slug}/related', [\App\Http\Controllers\PostController::class, 'related']);
 Route::get('/posts/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'index']);
 Route::post('/posts/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'store']);
 

@@ -57,6 +57,24 @@ class PostController extends Controller
     }
 
     /**
+     * PUBLIC: Get related posts by category.
+     */
+    public function related($slug)
+    {
+        $post = Post::where('slug', $slug)->firstOrFail();
+        
+        $related = Post::published()
+            ->with(['user', 'category', 'tags'])
+            ->where('category_id', $post->category_id)
+            ->where('id', '!=', $post->id)
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+            
+        return PostResource::collection($related);
+    }
+
+    /**
      * ADMIN: Display all posts (any status).
      */
     public function adminIndex(Request $request)
