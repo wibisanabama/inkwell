@@ -97,6 +97,15 @@ class PostController extends Controller
     }
 
     /**
+     * ADMIN: Display single post for editing.
+     */
+    public function adminShow($id)
+    {
+        $post = Post::with(['category', 'user', 'tags'])->findOrFail($id);
+        return new PostResource($post);
+    }
+
+    /**
      * ADMIN: Store a newly created post.
      */
     public function store(PostRequest $request)
