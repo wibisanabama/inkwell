@@ -99,12 +99,9 @@ class CommentController extends Controller
     {
         $query = Comment::with(['post', 'user']);
 
-        if ($request->has('status')) {
-            if ($request->status === 'Pending') {
-                $query->where('is_approved', false);
-            } elseif ($request->status === 'Approved') {
-                $query->where('is_approved', true);
-            }
+        if ($request->has('status') && strtolower($request->status) !== 'all') {
+            $isApproved = strtolower($request->status) === 'approved';
+            $query->where('is_approved', $isApproved);
         }
 
         $perPage = $request->input('per_page', 15);
