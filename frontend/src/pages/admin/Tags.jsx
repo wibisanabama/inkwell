@@ -49,7 +49,7 @@ const Tags = () => {
 
     setIsSubmitting(true);
     try {
-      await api.post('/tags', { name: newTagName });
+      await api.post('/admin/tags', { name: newTagName });
       toast.success('Tag added successfully');
       setNewTagName('');
       fetchTags();
@@ -69,7 +69,7 @@ const Tags = () => {
     if (!currentTag) return;
     
     try {
-      await api.delete(`/tags/${currentTag.id}`);
+      await api.delete(`/admin/tags/${currentTag.id}`);
       toast.success('Tag deleted successfully');
       fetchTags();
     } catch (error) {
