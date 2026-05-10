@@ -16,7 +16,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await api.get('/admin/settings');
+        const response = await api.get('/settings');
         // Backend returns an object with key-value pairs or an array of objects
         // Let's assume it returns { site_name: "Inkwell", allow_comments: "true", ... }
         // or data: { site_name: "...", ... }
@@ -57,7 +57,13 @@ const Settings = () => {
     setSaving(true);
     try {
       // Backend expects bulk update, possibly an object with keys
-      await api.put('/admin/settings', settings);
+      await api.put('/admin/settings', {
+        settings: {
+          ...settings,
+          allow_comments: settings.allow_comments ? 'true' : 'false',
+          posts_per_page: String(settings.posts_per_page)
+        }
+      });
       toast.success('Settings updated successfully!');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to update settings');
