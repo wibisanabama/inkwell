@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { FiUploadCloud, FiX, FiCheckCircle } from 'react-icons/fi';
 import toast from 'react-hot-toast';
-import api from '../../api/axios';
+import api from '../api/axios';
 
 const ImageUpload = ({ value, onChange }) => {
   const [preview, setPreview] = useState(value || null);

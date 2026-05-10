@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FiMessageSquare, FiCornerDownRight } from 'react-icons/fi';
-import api from '../../api/axios';
-import { AuthContext } from '../../contexts/AuthContext';
+import api from '../api/axios';
+import { AuthContext } from '../contexts/AuthContext';
 
 // Recursive Comment Component
 const CommentItem = ({ comment, onReply, postSlug }) => {
