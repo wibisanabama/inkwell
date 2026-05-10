@@ -10,4 +10,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
+    
+    // Admin Dashboard
+    Route::get('/admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
 });
