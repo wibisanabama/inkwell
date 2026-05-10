@@ -13,6 +13,7 @@ import Home from './pages/public/Home';
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
 import Dashboard from './pages/admin/Dashboard';
+import Categories from './pages/admin/Categories';
 
 function App() {
   return (
@@ -33,9 +34,9 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<AdminLayout />}>
                 <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/categories" element={<Categories />} />
                 {/* Future Admin Routes will go here */}
                 <Route path="/admin/posts" element={<div>Posts (Placeholder)</div>} />
-                <Route path="/admin/categories" element={<div>Categories (Placeholder)</div>} />
                 <Route path="/admin/tags" element={<div>Tags (Placeholder)</div>} />
                 <Route path="/admin/comments" element={<div>Comments (Placeholder)</div>} />
                 <Route path="/admin/settings" element={<div>Settings (Placeholder)</div>} />
