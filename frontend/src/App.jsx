@@ -17,6 +17,7 @@ import Categories from './pages/admin/Categories';
 import Tags from './pages/admin/Tags';
 import Posts from './pages/admin/Posts';
 import PostEditor from './pages/admin/PostEditor';
+import Comments from './pages/admin/Comments';
 
 function App() {
   return (
@@ -45,8 +46,10 @@ function App() {
                 <Route path="/admin/posts/create" element={<PostEditor />} />
                 <Route path="/admin/posts/:id/edit" element={<PostEditor />} />
 
+                {/* Comments */}
+                <Route path="/admin/comments" element={<Comments />} />
+
                 {/* Future Admin Routes will go here */}
-                <Route path="/admin/comments" element={<div>Comments (Placeholder)</div>} />
                 <Route path="/admin/settings" element={<div>Settings (Placeholder)</div>} />
               </Route>
             </Route>
