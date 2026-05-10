@@ -34,4 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/admin/posts', [\App\Http\Controllers\PostController::class, 'store']);
     Route::put('/admin/posts/{post}', [\App\Http\Controllers\PostController::class, 'update']);
     Route::delete('/admin/posts/{post}', [\App\Http\Controllers\PostController::class, 'destroy']);
+
+    // Admin Upload
+    Route::post('/admin/upload', [\App\Http\Controllers\MediaController::class, 'upload']);
 });
