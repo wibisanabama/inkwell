@@ -79,19 +79,24 @@ const PostEditor = () => {
     }
   }, [id, isEditMode, navigate]);
 
-  // Generate slug from title automatically if not in edit mode (or if slug is empty)
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+
+  // Generate slug from title automatically if not in edit mode
   useEffect(() => {
-    if (!isEditMode && formData.title && !formData.slug) {
+    if (!isEditMode && formData.title && !slugManuallyEdited) {
       const generatedSlug = formData.title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)+/g, '');
       setFormData(prev => ({ ...prev, slug: generatedSlug }));
     }
-  }, [formData.title, isEditMode, formData.slug]);
+  }, [formData.title, isEditMode, slugManuallyEdited]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'slug') {
+      setSlugManuallyEdited(true);
+    }
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 

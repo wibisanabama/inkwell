@@ -42,9 +42,10 @@ const Blog = () => {
     fetchSidebar();
   }, []);
 
+  const currentSearch = searchParams.get('search');
   useEffect(() => {
     fetchPosts();
-  }, [page, searchParams.get('search')]);
+  }, [page, currentSearch]);
 
   const handleSearch = (e) => {
     e.preventDefault();
