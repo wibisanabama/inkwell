@@ -16,6 +16,8 @@ Route::get('/posts/{slug}/related', [\App\Http\Controllers\PostController::class
 Route::get('/posts/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'index']);
 Route::post('/posts/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'store']);
 
+Route::get('/settings', [\App\Http\Controllers\SettingController::class, 'index']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'me']);
@@ -45,4 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/comments', [\App\Http\Controllers\CommentController::class, 'adminIndex']);
     Route::put('/admin/comments/{id}', [\App\Http\Controllers\CommentController::class, 'update']);
     Route::delete('/admin/comments/{id}', [\App\Http\Controllers\CommentController::class, 'destroy']);
+
+    // Admin Settings
+    Route::put('/admin/settings', [\App\Http\Controllers\SettingController::class, 'update']);
 });
